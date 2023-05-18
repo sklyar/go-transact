@@ -1,0 +1,167 @@
+run:
+  concurrency: 10
+  timeout: 10m
+  issues-exit-code: 1
+  tests: true
+  build-tags:
+    - integration
+  skip-dirs-use-default: false
+  modules-download-mode: readonly
+  allow-parallel-runners: false
+
+linters:
+  fast: false
+
+  enable:
+    - asasalint
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - contextcheck
+    - durationcheck
+    - errcheck
+    - errname
+    - errorlint
+    - exportloopref
+    - gocritic
+    - godot
+    - gofmt
+    - gofumpt
+    - goimports
+    - gomoddirectives
+    - gosec
+    - gosimple
+    - govet
+    - interfacer
+    - misspell
+    - nakedret
+    - nilerr
+    - nilnil
+    - noctx
+    - nolintlint
+    - prealloc
+    - predeclared
+    - promlinter
+    - reassign
+    - revive
+    - rowserrcheck
+    - sqlclosecheck
+    - staticcheck
+    - stylecheck
+    - tagliatelle
+    - tenv
+    - testableexamples
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - wastedassign
+
+  disable:
+    - containedctx
+    - cyclop
+    - deadcode
+    - decorder
+    - depguard
+    - dogsled
+    - dupl
+    - dupword
+    - errchkjson
+    - execinquery
+    - exhaustive
+    - exhaustivestruct # Deprecated, replaced by check below.
+    - exhaustruct
+    - forbidigo
+    - forcetypeassert
+    - funlen
+    - gci
+    - ginkgolinter
+    - gocheckcompilerdirectives
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocyclo
+    - godox
+    - goerr113
+    - goheader
+    - golint
+    - gomnd
+    - gomodguard
+    - goprintffuncname
+    - grouper
+    - ifshort
+    - importas
+    - interfacebloat
+    - ireturn
+    - lll
+    - loggercheck
+    - maintidx
+    - makezero
+    - maligned
+    - musttag
+    - nestif
+    - nlreturn
+    - nonamedreturns
+    - nosnakecase
+    - nosprintfhostport
+    - testpackage
+    - typecheck
+    - varnamelen
+    - whitespace
+    - wrapcheck
+    - wsl
+    - ineffassign
+
+linters-settings:
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+    disabled-checks:
+      - hugeParam
+      - rangeExprCopy
+      - rangeValCopy
+
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+    exclude-functions:
+      - io/ioutil.ReadFile
+      - io.Copy(*bytes.Buffer)
+      - io.Copy(os.Stdout)
+
+  govet:
+    disable:
+      - fieldalignment
+
+  nakedret:
+    max-func-lines: 1
+
+  tagliatelle:
+    case:
+      rules:
+        json: snake
+        yaml: snake
+        xml: camel
+        bson: camel
+        avro: snake
+        mapstructure: kebab
+
+output:
+  print-issued-lines: false
+  print-linter-name: true
+  uniq-by-line: false
+  path-prefix: ""
+  sort-results: true
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  new: false
+  fix: false
