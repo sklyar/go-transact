@@ -43,7 +43,7 @@ func TestBeginFunc(t *testing.T) {
 	db := txtest.NewDB(t)
 	manager := &Manager{
 		db:    db,
-		store: newTransactionStore(),
+		store: newStore(),
 	}
 
 	baseContext := context.Background()
@@ -62,7 +62,7 @@ func TestBeginFuncTransactionFunctionReturnsError(t *testing.T) {
 	db := txtest.NewDB(t)
 	manager := &Manager{
 		db:    db,
-		store: newTransactionStore(),
+		store: newStore(),
 	}
 
 	baseContext := context.Background()
@@ -84,7 +84,7 @@ func TestBeginFuncSuccessfulTransactionWithChildTransaction(t *testing.T) {
 	db := txtest.NewDB(t)
 	manager := &Manager{
 		db:    db,
-		store: newTransactionStore(),
+		store: newStore(),
 	}
 
 	ctx := context.Background()
@@ -114,7 +114,7 @@ func TestBeginFuncErrorOnChildTransactionRetrieval(t *testing.T) {
 	db := txtest.NewDB(t)
 	manager := &Manager{
 		db:    db,
-		store: newTransactionStore(),
+		store: newStore(),
 	}
 
 	ctx := context.Background()
