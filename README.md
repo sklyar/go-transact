@@ -1,5 +1,9 @@
 # Go Transaction Manager
 
+[![pkg-img]][pkg-url]
+[![version-img]][version-url]
+[![license-img]][license-url]
+
 Go Transaction Manager is a library for managing SQL transactions in Go applications, offering a simple interface for controlling both isolated and nested transactions. Through context-based transaction management, it ensures atomicity and ease of use.
 
 ## Features
@@ -108,3 +112,10 @@ In this example, nested transactions are created using `BeginFunc`. If an error 
 
 ## License
 Go Transaction Manager is released under the MIT License. See the bundled LICENSE file for details.
+
+[pkg-img]: https://pkg.go.dev/badge/sklyar/go-transact
+[pkg-url]: https://pkg.go.dev/github.com/sklyar/go-transact
+[version-img]: https://img.shields.io/github/v/release/sklyar/go-transact
+[version-url]: https://github.com/sklyar/go-transact/releases
+[license-img]: https://img.shields.io/github/license/sklyar/go-transact
+[license-url]: https://raw.githubusercontent.com/sklyar/go-transact/master/LICENSE
