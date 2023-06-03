@@ -23,7 +23,7 @@ type TransactionFunc func(tx context.Context) error
 
 type Manager struct {
 	db    txsql.DB
-	store *transactionStore
+	store *store
 
 	// lastID is the last transaction id.
 	// It is used to generate a new transaction id.
@@ -31,7 +31,7 @@ type Manager struct {
 }
 
 func NewManager(adapterFactory AdapterFactoryFunc) (*Manager, txsql.DB, error) {
-	store := newTransactionStore()
+	store := newStore()
 	db, err := adapterFactory(store)
 	if err != nil {
 		return nil, nil, err

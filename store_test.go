@@ -9,10 +9,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_transactionStore_Transaction(t *testing.T) {
+func Test_store_Transaction(t *testing.T) {
 	t.Parallel()
 
-	s := newTransactionStore()
+	s := newStore()
 	require.NoError(t, s.Add(&Transaction{id: "1"}), "Expected no error when adding transaction")
 	require.NoError(t, s.Add(&Transaction{id: "2"}), "Expected no error when adding transaction")
 
@@ -44,10 +44,10 @@ func Test_transactionStore_Transaction(t *testing.T) {
 	})
 }
 
-func Test_transactionStore_Add(t *testing.T) {
+func Test_store_Add(t *testing.T) {
 	t.Parallel()
 
-	s := newTransactionStore()
+	s := newStore()
 	assert.NoError(t, s.Add(&Transaction{id: "1"}), "Expected no error when adding transaction")
 	assert.NoError(t, s.Add(&Transaction{id: "2"}), "Expected no error when adding transaction")
 
@@ -56,11 +56,11 @@ func Test_transactionStore_Add(t *testing.T) {
 	assert.Error(t, s.Add(&Transaction{id: "1"}), "Expected error when adding transaction with same id")
 }
 
-func Test_transactionStore_Delete(t *testing.T) {
+func Test_store_Delete(t *testing.T) {
 	t.Parallel()
 
 	t.Run("delete a transaction", func(t *testing.T) {
-		s := newTransactionStore()
+		s := newStore()
 		tx1 := &Transaction{id: "1"}
 		tx2 := &Transaction{id: "2"}
 
@@ -80,7 +80,7 @@ func Test_transactionStore_Delete(t *testing.T) {
 	})
 
 	t.Run("delete a nested transaction", func(t *testing.T) {
-		s := newTransactionStore()
+		s := newStore()
 		tx1 := &Transaction{id: "1"}
 		tx2 := &Transaction{id: "2"}
 
@@ -98,8 +98,8 @@ func Test_transactionStore_Delete(t *testing.T) {
 	})
 }
 
-func Test_transactionStore_Len(t *testing.T) {
-	store := newTransactionStore()
+func Test_store_Len(t *testing.T) {
+	store := newStore()
 	assert.Equal(t, 0, store.Len(), "Expected 0 transactions")
 
 	_ = store.Add(&Transaction{id: "1"})

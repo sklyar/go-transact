@@ -8,21 +8,21 @@ import (
 	"github.com/sklyar/go-transact/internal/txcontext"
 )
 
-// transactionStore is the store for transactions.
-type transactionStore struct {
+// store is the store for transactions.
+type store struct {
 	txs map[string]*Transaction
 	mu  sync.RWMutex
 }
 
-func newTransactionStore() *transactionStore {
-	return &transactionStore{
+func newStore() *store {
+	return &store{
 		txs: make(map[string]*Transaction),
 	}
 }
 
 // Transaction returns the transaction for the given context.
 // If there is no transaction in the context, it returns false.
-func (s *transactionStore) Transaction(ctx context.Context) (*Transaction, bool) {
+func (s *store) Transaction(ctx context.Context) (*Transaction, bool) {
 	tid, ok := txcontext.ID(ctx)
 	if !ok {
 		return nil, false
@@ -35,7 +35,7 @@ func (s *transactionStore) Transaction(ctx context.Context) (*Transaction, bool)
 }
 
 // Add adds the transaction to the store.
-func (s *transactionStore) Add(tx *Transaction) error {
+func (s *store) Add(tx *Transaction) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
@@ -50,7 +50,7 @@ func (s *transactionStore) Add(tx *Transaction) error {
 }
 
 // Delete deletes the transaction from the store.
-func (s *transactionStore) Delete(ctx context.Context, tx *Transaction) error {
+func (s *store) Delete(ctx context.Context, tx *Transaction) error {
 	if txcontext.IsChild(ctx) {
 		return nil
 	}
@@ -69,7 +69,7 @@ func (s *transactionStore) Delete(ctx context.Context, tx *Transaction) error {
 }
 
 // Len returns the number of transactions in the store.
-func (s *transactionStore) Len() int {
+func (s *store) Len() int {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
