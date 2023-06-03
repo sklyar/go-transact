@@ -11,16 +11,22 @@ import (
 	"github.com/sklyar/go-transact/txsql"
 )
 
+// TransactionStore represents an interface that allows transactions to be retrieved from a given context.
 type TransactionStore interface {
-	// Transaction returns the transaction for the given context.
+	// Transaction retrieves the transaction from a given context.
 	// If there is no transaction in the context, it returns false.
 	Transaction(ctx context.Context) (*Transaction, bool)
 }
 
+// AdapterFactoryFunc is a function type that injects a TransactionStore into a database adapter.
 type AdapterFactoryFunc func(transactionStore TransactionStore) (txsql.DB, error)
 
+// TransactionFunc represents a function to be executed within a database transaction.
+// The function receives a context that has been wrapped to include the current transaction.
+// This allows the function to interact with the transaction in the context it's executed in.
 type TransactionFunc func(tx context.Context) error
 
+// Manager is a type that helps manage transactions within a database.
 type Manager struct {
 	db    txsql.DB
 	store *store
@@ -30,6 +36,7 @@ type Manager struct {
 	lastID uint64
 }
 
+// NewManager creates a new transaction manager.
 func NewManager(adapterFactory AdapterFactoryFunc) (*Manager, txsql.DB, error) {
 	store := newStore()
 	db, err := adapterFactory(store)
@@ -40,6 +47,16 @@ func NewManager(adapterFactory AdapterFactoryFunc) (*Manager, txsql.DB, error) {
 	return &Manager{db: db, store: store}, db, nil
 }
 
+// BeginFunc initiates a new transaction and executes a provided closure within it.
+// The function automatically manages the transaction's lifecycle. It commits the transaction if the
+// closure is executed successfully, and rollbacks it if the closure returns an error.
+//
+// If BeginFunc is invoked within an existing transaction, it reuses the parent transaction instead of
+// creating a new one. This way, the function provides transaction nesting capabilities. In case the
+// 'child' transaction encounters an error, it will also mark the parent transaction for rollback.
+//
+// Note that the actual (parent) transaction does not complete after the child transaction finishes, but only upon
+// completion of the parent transaction itself. This strategy ensures the atomicity of grouped operations.
 func (m *Manager) BeginFunc(ctx context.Context, fn TransactionFunc, opts ...txsql.TransactionOption) (err error) {
 	ctx, tx, err := m.transaction(ctx, opts)
 	if err != nil {
@@ -68,6 +85,15 @@ func (m *Manager) BeginFunc(ctx context.Context, fn TransactionFunc, opts ...txs
 	return nil
 }
 
+// Begin initiates a new transaction, providing manual control over the transaction's lifecycle.
+// It returns a Transaction object that can be used to commit or rollback the transaction,
+// as well as a context that carries the transaction ID.
+//
+// Like BeginFunc, if Begin is invoked within an existing transaction, it reuses the parent
+// transaction instead of creating a new one, enabling transaction nesting.
+//
+// It's important to note that this method doesn't automatically handle committing or rollback
+// the transaction - these operations must be explicitly invoked on the returned Transaction.
 func (m *Manager) Begin(ctx context.Context, opts ...txsql.TransactionOption) (context.Context, *Transaction, error) {
 	return m.transaction(ctx, opts)
 }

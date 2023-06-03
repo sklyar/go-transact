@@ -14,6 +14,7 @@ type store struct {
 	mu  sync.RWMutex
 }
 
+// newStore creates a new store.
 func newStore() *store {
 	return &store{
 		txs: make(map[string]*Transaction),
