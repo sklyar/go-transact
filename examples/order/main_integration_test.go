@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/sklyar/go-transact"
-	"github.com/sklyar/go-transact/adapters/txstd"
+	"github.com/sklyar/go-transact/adapters/transactstd"
 	"github.com/sklyar/go-transact/txsql"
 	"github.com/stretchr/testify/assert"
 	"github.com/testcontainers/testcontainers-go"
@@ -84,7 +84,7 @@ func TestMain(m *testing.M) {
 		log.Fatal(err)
 	}
 
-	txManager, db, err = transact.NewManager(txstd.Wrap(sqlDB))
+	txManager, db, err = transact.NewManager(transactstd.Wrap(sqlDB))
 	if err != nil {
 		log.Fatal(err)
 	}

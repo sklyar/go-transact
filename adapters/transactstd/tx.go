@@ -1,4 +1,4 @@
-package txstd
+package transactstd
 
 import (
 	"context"

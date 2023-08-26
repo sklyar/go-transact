@@ -27,9 +27,9 @@ go get github.com/sklyar/go-transact
 
 `go-transact` is designed to be extensible and supports various database adapters. Here is a list of currently supported ones:
 
-| Adapter                                                   | Description                                                                                                                                |
-|-----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| **Standard library adapter ([txstd](./adapters/txstd/))** | The standard SQL adapter provides an easy way to integrate `go-transact` with any database that conforms to Go's `database/sql` interface. |
+| Adapter                                                               | Description                                                                                                                                |
+|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| **Standard library adapter ([transactstd](./adapters/transactstd/))** | The standard SQL adapter provides an easy way to integrate `go-transact` with any database that conforms to Go's `database/sql` interface. |
 
 ## Usage
 
@@ -41,14 +41,14 @@ Here's how to get started with `go-transact`:
 import (
 	...
 	"github.com/sklyar/go-transact"
-	"github.com/sklyar/go-transact/adapters/txstd"
+	"github.com/sklyar/go-transact/adapters/transactstd"
 )
 
 func main() {
     sqlDB, err := sql.Open("pgx", os.Getenv("DATABASE_URL"))
     checkErr(err)
     
-    txManager, db, err := transact.NewManager(txstd.Wrap(sqlDB))
+    txManager, db, err := transact.NewManager(transactstd.Wrap(sqlDB))
     checkErr(err)
 }
 ```

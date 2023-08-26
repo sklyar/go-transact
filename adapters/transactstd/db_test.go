@@ -1,6 +1,6 @@
 //go:build integration
 
-package txstd
+package transactstd
 
 import (
 	"context"
