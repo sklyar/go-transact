@@ -9,7 +9,7 @@ import (
 	_ "github.com/jackc/pgx/v5/stdlib"
 	_ "github.com/lib/pq"
 	"github.com/sklyar/go-transact"
-	"github.com/sklyar/go-transact/adapters/txstd"
+	"github.com/sklyar/go-transact/adapters/transactstd"
 	"github.com/sklyar/go-transact/txsql"
 )
 
@@ -50,7 +50,7 @@ func main() {
 		panic(fmt.Errorf("unable to open database: %w", err))
 	}
 
-	txManager, db, err := transact.NewManager(txstd.Wrap(sqlDB))
+	txManager, db, err := transact.NewManager(transactstd.Wrap(sqlDB))
 	if err != nil {
 		panic(fmt.Errorf("unable to create transaction manager: %w", err))
 	}
