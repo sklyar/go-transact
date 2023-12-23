@@ -39,9 +39,10 @@ Here's how to get started with `go-transact`:
 
 ```go
 import (
-	...
-	"github.com/sklyar/go-transact"
-	"github.com/sklyar/go-transact/adapters/transactstd"
+    ...
+    _ "github.com/jackc/pgx/v5/stdlib"
+    "github.com/sklyar/go-transact"
+    "github.com/sklyar/go-transact/adapters/transactstd"
 )
 
 func main() {
