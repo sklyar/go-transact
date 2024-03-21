@@ -6,7 +6,7 @@ import (
 	"context"
 	"time"
 
-	_ "github.com/jackc/pgx/v4/stdlib" // used by migrator
+	_ "github.com/jackc/pgx/v5/stdlib" // used by migrator
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"github.com/testcontainers/testcontainers-go/wait"
