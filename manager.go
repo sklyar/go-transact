@@ -134,7 +134,7 @@ func (m *Manager) transaction(ctx context.Context, opts []txsql.TransactionOptio
 		if err != nil {
 			return ctx, nil, errors.Join(addErr, fmt.Errorf("failed to rollback transaction: %w", err))
 		}
-		return ctx, nil, err
+		return ctx, nil, addErr
 	}
 
 	return ctx, tx, nil
