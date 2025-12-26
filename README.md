@@ -1,5 +1,11 @@
 # Go Transaction Manager
 
+> **⚠️ This repository is archived.**
+>
+> I recommend using [go-transaction-manager](https://github.com/avito-tech/go-transaction-manager) instead. It offers better test coverage, more flexibility, and supports multiple database driver implementations.
+
+---
+
 [![pkg-img]][pkg-url]
 [![version-img]][version-url]
 [![license-img]][license-url]
